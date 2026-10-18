@@ -1,0 +1,33 @@
+name: MythLayer nightly web health
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/mythlayer-web-health.yml'
+      - 'tools/mythlayer-web-health.cjs'
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: mythlayer-web-health
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Install pinned browser tools
+        run: |
+          npm install --prefix "$RUNNER_TEMP/ml-browser" --no-save --ignore-scripts playwright@1.62.1
+          "$RUNNER_TEMP/ml-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Check the live Porkbun website
+        env:
+          ML_PLAYWRIGHT_MODULE: ${{ runner.temp }}/ml-browser/node_modules/playwright
+        run: node tools/mythlayer-web-health.cjs
