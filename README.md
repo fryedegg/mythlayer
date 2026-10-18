@@ -18,7 +18,7 @@ Optional Google Analytics collection is restricted to the production HTTPS domai
 
 - `index.html` is the compact launch page. `features.html`, `watch.html`, `roadmap.html`, `team.html` and `faq.html` contain real static content and unique search metadata. Their default content remains useful without JavaScript.
 - `site-r8.js` provides local tabs, legacy hash migration, motion preferences, gallery viewing, video controls and FAQ search. Ordinary page links support normal browser navigation.
-- `site-r7.css` preserves the existing logo, orange/gold branding and layout. `seo-r8.css` adds fitting for the optimized video previews. `fonts-r8.css` uses the same font families and weights in WOFF2 format.
+- `site-r7.css` preserves the existing logo, orange/gold branding and layout. `seo-r8.css` adds fitting for the optimized video previews. `fonts-r8.css` retains the main marketing pages original font families and weights in WOFF2 format. The separate Supercon page retains its original Google Fonts, including Cinzel Decorative.
 - `campaign-tags-r8.js` validates and preserves the approved campaign labels. Register new campaign labels before publishing new promotional links.
 - `analytics-r8.js` implements optional, consent-gated GA4 page and interaction measurement. Keep the existing measurement ID, consent behavior and cross-domain itch.io integration when editing.
 - `privacy.html`, `sitemap.xml` and `robots.txt` describe privacy choices and search discovery. Legacy aliases and the `/buy/` and `/social/` routes remain for existing links.
