@@ -1,0 +1,50 @@
+/* Original MythLayer font identities and all glyphs, losslessly repackaged as WOFF2. Font licenses remain unchanged. */
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/site-20261017-r7/r8-Cinzel-400.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(assets/site-20261017-r7/r8-Cinzel-500.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(assets/site-20261017-r7/r8-Cinzel-600.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(assets/site-20261017-r7/r8-Cinzel-700.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/site-20261017-r7/r8-JetBrains-Mono-400.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(assets/site-20261017-r7/r8-JetBrains-Mono-500.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(assets/site-20261017-r7/r8-JetBrains-Mono-600.woff2) format('woff2');
+}
