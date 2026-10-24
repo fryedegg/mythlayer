@@ -26,6 +26,8 @@ async function test(name,fn){reset();await fn();passed++;console.log('PASS '+nam
  await test('repeat server5xx remains actionable',async()=>{await probe('server',()=>{const e=Error('temporary');e.httpStatus=503;throw e;},0);assert.equal(report.checks[0].pass,false);assert.equal(report.checks[0].detail.status,503);});
  await test('missing result can never appear passed',()=>assert.equal(summary(null).status,'incomplete'));
  await test('fewer than full baseline assertions cannot appear passed',()=>assert.equal(summary({checks:[{pass:true}]}).status,'incomplete'));
+ await test('external verification limits do not masquerade as core browser failure',()=>{const r={checks:[...Array.from({length:64},()=>({pass:true})),{name:'Discord invitation verifies',pass:null,kind:'external'},{name:'public itch page available',pass:null,kind:'external'}]};const x=summary(r);assert.equal(x.status,'passed');assert.equal(x.verified,64);assert.equal(x.externalUnverified,2);});
+ await test('missing a core assertion still makes the run incomplete',()=>{assert.equal(summary({checks:[...Array.from({length:63},()=>({pass:true})),{pass:null,kind:'external'},{pass:null,kind:'external'}]}).status,'incomplete');});
  const env={GITHUB_REPOSITORY:'fryedegg/mythlayer',GITHUB_REF:'refs/heads/main',GITHUB_EVENT_NAME:'schedule',GITHUB_RUN_ID:'123',GITHUB_SHA:'a'.repeat(40),CHECK_JOB_RESULT:'success'};
  const good=JSON.stringify({status:'passed',verified:66,failed:0,unverified:0,recovered:1,names:[]});
  await test('publisher refuses pull requests and forks',()=>{assert.throws(()=>payload(good,{...env,GITHUB_EVENT_NAME:'pull_request'}));assert.throws(()=>payload(good,{...env,GITHUB_REPOSITORY:'other/repo'}));});

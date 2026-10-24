@@ -6,21 +6,23 @@ function summary(report) {
   const checks=report&&Array.isArray(report.checks)?report.checks:[];
   const verified=checks.filter(c=>c.pass===true).length,failed=checks.filter(c=>c.pass===false).length;
   const unverified=checks.filter(c=>c.pass===null).length;
+  const externalUnverified=checks.filter(c=>c.pass===null&&c.kind==='external').length;
   const names=checks.filter(c=>c.pass!==true).map(c=>String(c.name||'Unknown check').replace(/[^a-zA-Z0-9 /_.()-]/g,'').slice(0,100)).slice(0,30);
-  return {status:failed?'failed':unverified||verified<66?'incomplete':'passed',verified,failed,unverified,
+  return {status:failed?'failed':unverified>externalUnverified||verified+externalUnverified<66?'incomplete':'passed',verified,failed,unverified,externalUnverified,
     recovered:report&&Array.isArray(report.recovered)?report.recovered.length:0,names};
 }
 function payload(input,env,now=new Date()) {
   if(env.GITHUB_REPOSITORY!==repository||env.GITHUB_REF!=='refs/heads/main'||!['schedule','workflow_dispatch'].includes(env.GITHUB_EVENT_NAME))throw Error('Trusted main publication only');
   if(!/^\d+$/.test(env.GITHUB_RUN_ID||'')||!/^[a-f0-9]{40}$/.test(env.GITHUB_SHA||''))throw Error('Invalid CI identity');
   let data;try{data=JSON.parse(input||'{}');}catch{data={};}
-  const valid=['passed','failed','incomplete'].includes(data.status)&&['verified','failed','unverified','recovered'].every(k=>Number.isSafeInteger(data[k])&&data[k]>=0&&data[k]<=500);
-  if(!valid)data={status:'incomplete',verified:0,failed:0,unverified:1,recovered:0,names:['Browser job did not produce a valid result']};
+  data.externalUnverified=data.externalUnverified||0;
+  const valid=['passed','failed','incomplete'].includes(data.status)&&['verified','failed','unverified','externalUnverified','recovered'].every(k=>Number.isSafeInteger(data[k])&&data[k]>=0&&data[k]<=500);
+  if(!valid)data={status:'incomplete',verified:0,failed:0,unverified:1,externalUnverified:0,recovered:0,names:['Browser job did not produce a valid result']};
   const names=(Array.isArray(data.names)?data.names:[]).map(s=>String(s).replace(/[^a-zA-Z0-9 /_.()-]/g,'').slice(0,100)).slice(0,30);
-  let status=data.failed?'failed':data.unverified||data.verified<66||env.CHECK_JOB_RESULT!=='success'?'incomplete':data.status;
+  let status=data.failed?'failed':data.unverified>data.externalUnverified||data.verified+data.externalUnverified<66||env.CHECK_JOB_RESULT!=='success'?'incomplete':data.status;
   return {schema:'mythlayer-web-health/v2',checkedAt:now.toISOString(),runId:env.GITHUB_RUN_ID,
     runUrl:'https://github.com/'+repository+'/actions/runs/'+env.GITHUB_RUN_ID,commit:env.GITHUB_SHA,
-    status,verified:data.verified,failed:data.failed,unverified:data.unverified,recovered:data.recovered,names};
+    status,verified:data.verified,failed:data.failed,unverified:data.unverified,externalUnverified:data.externalUnverified,recovered:data.recovered,names};
 }
 async function publish(data,token,request=fetch) {
   if(!token)throw Error('Missing ephemeral CI token');
