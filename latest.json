@@ -1,13 +1,14 @@
 {
   "schema": "mythlayer-web-health/v2",
-  "checkedAt": "2026-10-24T10:38:16.691Z",
-  "runId": "40086637091",
-  "runUrl": "https://github.com/fryedegg/mythlayer/actions/runs/40086637091",
-  "commit": "933371efa80fa3743b96543638dfd44cc46ef58d",
+  "checkedAt": "2026-10-24T11:16:55.841Z",
+  "runId": "40089198684",
+  "runUrl": "https://github.com/fryedegg/mythlayer/actions/runs/40089198684",
+  "commit": "634d8ddd842dcb470ae1046504a9cc242a824b7a",
   "status": "passed",
   "verified": 66,
   "failed": 0,
   "unverified": 0,
+  "externalUnverified": 0,
   "recovered": 0,
   "names": []
 }
