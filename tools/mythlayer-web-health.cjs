@@ -8,7 +8,7 @@ const report = {checkedAt:new Date().toISOString(),checks:[],recovered:[],condit
 let activeChecks=null,activeStage='start';
 function check(name, pass, detail, kind='site') { (activeChecks||report.checks).push({name,pass:pass===null?null:!!pass,kind,...(detail?{detail}: {})}); }
 function availability(name,status) {
-  if(status===403||status===429)check(name,null,{status,note:'Automated verification blocked/rate-limited; destination not confirmed broken.'},'monitor');
+  if(status===403||status===429)check(name,null,{status,note:'Automated verification blocked/rate-limited; destination not confirmed broken.'},'external');
   else check(name,status===200,{status});
 }
 function stage(name){activeStage=name;}
@@ -16,7 +16,7 @@ function safeError(error) {
   return {stage:activeStage,exceptionClass:/timeout/i.test(error.name+' '+error.message)?'timeout':/net::|network|socket|ECONN|ENOTFOUND/i.test(error.message)?'network':'browser',
     networkCode:(String(error.message).match(/(?:net::[A-Z_]+|ECONN[A-Z]+|ENOTFOUND)/)||[])[0]||null};
 }
-async function probe(name,operation,delay=1000) {
+async function probe(name,operation,delay=1000,kind='monitor') {
   for(let attempt=1;attempt<=2;attempt++) {
     activeChecks=[];activeStage='start';const began=Date.now();
     try {
@@ -29,7 +29,7 @@ async function probe(name,operation,delay=1000) {
       if(attempt===1){await pause(delay);continue;}
       const detail={...safeError(error),attempts:2,elapsedMs:Date.now()-began};
       if(error.httpStatus)check(name+' HTTP available',false,{...detail,status:error.httpStatus});
-      else check(name+' verification completed',null,detail,'monitor');
+      else check(name+' verification completed',null,detail,kind);
     }
   }
 }
@@ -111,7 +111,7 @@ async function publicChecks(browser) {
       const context=await browser.newContext({serviceWorkers:'block'});
       try{stage('external availability');const response=await context.request.get(target.url,{timeout:20000});transientStatus(response.status());availability(target.name,response.status());}
       finally{await context.close();}
-    });
+    },1000,'external');
   }
 }
 async function decline(browser) {
@@ -136,7 +136,8 @@ async function main(){
   }catch(error){activeChecks=null;check('Browser suite available',null,safeError(error),'monitor');}
   finally {
     if(browser)await browser.close().catch(()=>{});
-    report.status=report.checks.some(c=>c.pass===false)?'failed':!report.checks.length||report.checks.some(c=>c.pass===null)?'incomplete':'passed';
+    const external=report.checks.filter(c=>c.pass===null&&c.kind==='external').length;
+    report.status=report.checks.some(c=>c.pass===false)?'failed':report.checks.some(c=>c.pass===null&&c.kind!=='external')||report.checks.filter(c=>c.pass===true).length+external<66?'incomplete':'passed';
     report.pass=report.status==='passed';
     report.warnings=report.checks.filter(c=>c.pass===null).map(c=>c.name);
     fs.writeFileSync('web-health-result.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));
