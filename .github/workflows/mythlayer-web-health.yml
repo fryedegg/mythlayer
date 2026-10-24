@@ -4,6 +4,8 @@ on:
     paths:
       - '.github/workflows/mythlayer-web-health.yml'
       - 'tools/mythlayer-web-health.cjs'
+      - 'tools/mythlayer-publish-health.cjs'
+      - 'tools/mythlayer-monitor.test.cjs'
   schedule:
     - cron: '17 3 * * *'
   workflow_dispatch:
@@ -16,6 +18,8 @@ jobs:
   check:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
+    outputs:
+      summary: ${{ steps.result.outputs.summary }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -23,6 +27,8 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
+      - name: Verify monitor error handling
+        run: node tools/mythlayer-monitor.test.cjs
       - name: Install pinned browser tools
         run: |
           npm install --prefix "$RUNNER_TEMP/ml-browser" --no-save --ignore-scripts playwright@1.62.1
@@ -31,3 +37,30 @@ jobs:
         env:
           ML_PLAYWRIGHT_MODULE: ${{ runner.temp }}/ml-browser/node_modules/playwright
         run: node tools/mythlayer-web-health.cjs
+      - name: Export sanitized status
+        id: result
+        if: always()
+        run: node tools/mythlayer-publish-health.cjs --summary
+  publish:
+    needs: check
+    if: >-
+      always() && github.repository == 'fryedegg/mythlayer' &&
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    permissions:
+      contents: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Publish public counts and timestamp on dedicated status branch
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STATUS_SUMMARY: ${{ needs.check.outputs.summary }}
+          CHECK_JOB_RESULT: ${{ needs.check.result }}
+        run: node tools/mythlayer-publish-health.cjs
