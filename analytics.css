@@ -1,0 +1,21 @@
+/* Website privacy choices; matches the existing orange/gold theme. */
+.ml-consent{position:fixed;z-index:1000;left:18px;right:18px;bottom:18px;max-width:1120px;margin:0 auto;padding:20px 24px;display:grid;grid-template-columns:1fr auto;gap:20px;border:1px solid #bd873e;border-radius:12px;background:#17100af7;color:#f3e5cb;box-shadow:0 8px 50px #0009;backdrop-filter:blur(12px);font-family:Arial,sans-serif}
+.ml-consent[hidden]{display:none}
+.ml-consent h2{font-family:var(--font-display,Georgia,serif);font-size:19px;line-height:1.3;margin:0 0 8px;color:#f0bd6c}
+.ml-consent p{font-size:14px;line-height:1.5;margin:0;max-width:76ch}
+.ml-consent a,.ml-privacy a{color:#f6c67f;text-decoration:underline;text-underline-offset:3px}
+.ml-consent p.ml-consent-status{font-size:12px;margin-top:6px;color:#d8c4a4}
+.ml-consent-actions{display:flex;gap:10px;align-items:center}
+.ml-consent-actions button,.ml-privacy button{min-height:44px;padding:10px 15px;border:1px solid #bf8b48;border-radius:6px;background:#261a0f;color:#f4d8aa;cursor:pointer;font:600 13px Arial,sans-serif}
+.ml-consent-actions button:hover,.ml-privacy button:hover{background:#3b2816}
+.ml-consent :focus-visible,.analytics-settings:focus-visible,.ml-privacy :focus-visible{outline:3px solid #f4bb60;outline-offset:4px}
+.analytics-settings{padding:0;background:none;border:0;color:inherit;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.ml-privacy{max-width:880px;margin:45px auto;padding:0 24px 70px;line-height:1.7;color:#e6d6bc;font-family:Arial,sans-serif}
+.ml-privacy h1,.ml-privacy h2{font-family:Georgia,serif;color:#f1bd6b;line-height:1.3}
+.ml-privacy h1{font-size:clamp(2rem,5vw,3rem)}
+.ml-privacy h2{font-size:1.45rem;margin-top:2rem}
+.ml-privacy code{overflow-wrap:anywhere}
+.ml-privacy ul{padding-left:24px}
+.ml-privacy-brand{display:flex;align-items:center;gap:12px;text-decoration:none!important;font-family:Georgia,serif;letter-spacing:.12em}
+.ml-privacy-brand img{width:42px;height:42px}
+@media(max-width:760px){.ml-consent{left:8px;right:8px;bottom:8px;padding:16px;grid-template-columns:1fr;gap:12px;max-height:75vh;overflow:auto}.ml-consent-actions button{flex:1}.ml-consent-actions{width:100%}.ml-consent p{font-size:13px}}

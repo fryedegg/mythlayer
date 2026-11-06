@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MythLayer — Redirecting to Purchase</title>
+<meta name="robots" content="noindex,follow">
+<style>
+  @font-face {
+    font-family: 'Cinzel';
+    src: local('Cinzel');
+  }
+  :root {
+    --void: #0a0a0e;
+    --void-deep: #050507;
+    --bone: #e8e2d4;
+    --bone-dim: #9a9488;
+    --veil-cyan: #4dd8e8;
+    --shard-violet: #9b6bd6;
+    --gold: #d4af5a;
+    --ember: #d64545;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--void);
+    color: var(--bone);
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    overflow: hidden;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* ambient rune-field backdrop */
+  .field {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 700px 500px at 50% 40%, rgba(155, 107, 214, 0.10), transparent 60%),
+      radial-gradient(ellipse 900px 700px at 80% 90%, rgba(77, 216, 232, 0.06), transparent 65%),
+      var(--void-deep);
+  }
+  .field::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232, 226, 212, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232, 226, 212, 0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 600px 500px at 50% 45%, black, transparent 75%);
+  }
+
+  .glyph-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 640px;
+    height: 640px;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(155, 107, 214, 0.14);
+    border-radius: 50%;
+    animation: spin 90s linear infinite;
+  }
+  .glyph-ring::before {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border: 1px solid rgba(77, 216, 232, 0.10);
+    border-radius: 50%;
+  }
+  @keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 560px;
+    padding: 0 32px;
+  }
+
+  .eyebrow {
+    font-family: 'Cinzel', 'Trajan Pro', 'Georgia', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--veil-cyan);
+    opacity: 0.85;
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', 'Trajan Pro', 'Georgia', serif;
+    font-weight: 400;
+    font-size: clamp(28px, 5vw, 42px);
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    color: var(--bone);
+    margin-bottom: 14px;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .sub {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--bone-dim);
+    margin-bottom: 44px;
+  }
+
+  .rune {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 26px;
+    color: var(--shard-violet);
+  }
+  .rune svg { width: 100%; height: 100%; }
+
+  .go {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 34px;
+    font-family: 'Cinzel', 'Trajan Pro', 'Georgia', serif;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--void);
+    background: var(--gold);
+    border: none;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .go:hover {
+    background: #e6c477;
+    transform: translateY(-1px);
+  }
+  .go:focus-visible {
+    outline: 2px solid var(--veil-cyan);
+    outline-offset: 3px;
+  }
+
+  .tagline {
+    margin-top: 40px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--bone-dim);
+    opacity: 0.6;
+  }
+
+  .progress-track {
+    width: 180px;
+    height: 2px;
+    background: rgba(232, 226, 212, 0.12);
+    margin: 0 auto 30px;
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--shard-violet), var(--veil-cyan));
+    animation: fill 3s linear forwards;
+  }
+  @keyframes fill {
+    to { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glyph-ring { animation: none; }
+    .progress-fill { animation: none; width: 100%; }
+    .go { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="field"></div>
+<div class="glyph-ring" aria-hidden="true"></div>
+
+<main>
+  <span class="rune" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
+      <path d="M12 2 L12 22 M4 8 L20 8 M4 16 L20 16 M7 2 L7 22 M17 2 L17 22" opacity="0.5"/>
+      <circle cx="12" cy="12" r="9.5"/>
+    </svg>
+  </span>
+
+  <div class="eyebrow">Opening the Gate</div>
+
+  <h1>Your table is about to get <em>a lot</em> more dangerous.</h1>
+
+  <p class="sub">Taking you to MythLayer on itch.io to complete your purchase.</p>
+
+  <div class="progress-track"><div class="progress-fill"></div></div>
+
+  <a class="go" href="https://mythlayer.itch.io/mythlayer">
+    Continue now →
+  </a>
+
+  <p class="tagline">Physical minis. Digital power. Zero table drag.</p>
+</main>
+
+<script src="/campaign-tags-r8.js?v=8.0"></script><script src="/buy-redirect.js?v=1.0"></script>
+
+</body>
+</html>

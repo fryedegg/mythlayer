@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MythLayer · Supercon Loot Quest</title>
+<meta name="description" content="Complete the quest, show your screen at Booth #1033, and spin the MythLayer Loot Wheel.">
+<meta name="theme-color" content="#0a0807">
+<meta property="og:title" content="MythLayer · Supercon Loot Quest">
+<meta property="og:description" content="Scan. Follow. Spin. Win. Complete the quest at Florida Supercon Booth #1033.">
+<meta property="og:url" content="https://mythlayer.com/social/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     MythLayer — Supercon Loot Quest landing page (mythlayer.com/social)
+     Existing convention landing page; original display fonts preserved.
+     LINKS block in the <script> at the bottom holds every URL.
+     ============================================================ */
+  :root{
+    --void:#0a0807;
+    --void2:#141110;
+    --bone:#e8e0d0;
+    --bone-dim:#a99f8c;
+    --veil:#38d6d6;
+    --shard:#8b5cf6;
+    --gold:#e6b84c;
+    --ember:#e8532e;
+    --card:#171311;
+    --edge:rgba(230,184,76,.25);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--void);
+    color:var(--bone);
+    font-family:Cinzel,serif;
+    min-height:100vh;
+    background-image:
+      radial-gradient(1200px 600px at 50% -10%, rgba(139,92,246,.12), transparent 60%),
+      radial-gradient(900px 500px at 50% 110%, rgba(232,83,46,.10), transparent 60%);
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:28px 18px 60px}
+  header{text-align:center;margin-bottom:10px}
+  .brand{
+    font-family:'Cinzel Decorative',serif;
+    font-weight:900;
+    font-size:clamp(30px,9vw,42px);
+    letter-spacing:.04em;
+    background:linear-gradient(180deg,#f4d98a,var(--gold) 55%,#9c7222);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 34px rgba(230,184,76,.25);
+  }
+  .tag{color:var(--veil);font-size:13px;letter-spacing:.22em;text-transform:uppercase;margin-top:6px}
+  .booth{
+    margin:18px auto 26px;display:inline-block;
+    border:1px solid var(--edge);border-radius:10px;
+    padding:10px 18px;background:var(--void2);
+    font-size:14px;letter-spacing:.08em;color:var(--bone-dim)
+  }
+  .booth b{color:var(--gold)}
+  h2{
+    font-size:15px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--veil);text-align:center;margin:34px 0 6px
+  }
+  .sub{color:var(--bone-dim);text-align:center;font-size:13px;margin-bottom:16px;line-height:1.5}
+  .spin-label{
+    text-align:center;font-family:'Cinzel Decorative',serif;font-weight:700;
+    color:var(--gold);font-size:18px;margin:30px 0 4px;letter-spacing:.06em
+  }
+  .card{
+    background:var(--card);border:1px solid var(--edge);border-radius:14px;
+    padding:16px;margin:12px 0;display:flex;align-items:center;gap:14px;
+    text-decoration:none;color:var(--bone);
+    transition:transform .08s ease, border-color .15s ease;
+  }
+  .card:active{transform:scale(.985)}
+  .card:hover{border-color:var(--gold)}
+  .num{
+    flex:0 0 40px;height:40px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:17px;color:var(--void);
+    background:linear-gradient(180deg,#f4d98a,var(--gold));
+    box-shadow:0 0 14px rgba(230,184,76,.35);
+  }
+  .num.v{background:linear-gradient(180deg,#7fe9e9,var(--veil));box-shadow:0 0 14px rgba(56,214,214,.35)}
+  .card .t{font-size:15px;line-height:1.45}
+  .card .t small{display:block;color:var(--bone-dim);font-size:12px;margin-top:3px;letter-spacing:.03em}
+  .cta{
+    display:block;text-align:center;margin:14px 0 0;
+    background:linear-gradient(180deg,#f4d98a,var(--gold) 60%,#b98a2e);
+    color:var(--void);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+    padding:16px;border-radius:12px;font-size:15px;text-decoration:none;
+    box-shadow:0 4px 24px rgba(230,184,76,.28);
+  }
+  .cta.ghost{
+    background:transparent;color:var(--veil);
+    border:1px solid rgba(56,214,214,.4);box-shadow:none;font-weight:700
+  }
+  .divider{
+    display:flex;align-items:center;gap:12px;margin:34px 0 6px;
+    color:var(--shard);font-size:12px;letter-spacing:.3em;text-transform:uppercase
+  }
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,.45),transparent)}
+  .fine{
+    margin-top:40px;color:var(--bone-dim);font-size:11.5px;line-height:1.7;
+    text-align:center;letter-spacing:.03em
+  }
+  .fine a{color:var(--veil);text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--bone-dim);font-size:12px;letter-spacing:.16em}
+  footer a{color:var(--gold);text-decoration:none}
+</style>
+<link rel="stylesheet" href="/analytics.css?v=1.0"></head>
+<body data-analytics-page="social">
+<div class="wrap">
+
+  <header>
+    <div class="brand">MYTHLAYER</div>
+    <div class="tag">Supercon Loot Quest</div>
+    <div class="booth">Florida Supercon · <b>Booth #1033</b> · Miami Beach Convention Center</div>
+  </header>
+
+  <h2>Scan. Follow. Spin. Win.</h2>
+  <p class="sub">Complete a quest below, show your screen at the booth,<br>and spin the Loot Wheel for dice, prizes &amp; discounts.</p>
+
+  <div class="spin-label">⚔️ Quest 1 — First Spin</div>
+  <p class="sub">Four steps, all on Instagram.</p>
+
+  <a class="card" id="lnk-ig-follow" href="#">
+    <div class="num">1</div>
+    <div class="t">Follow <b>@mythlayer</b> on Instagram<small>Tap to open our profile</small></div>
+  </a>
+  <a class="card" id="lnk-ig-reel" href="#">
+    <div class="num">2</div>
+    <div class="t">Comment on the trailer &amp; tag 3 friends<small>Tap to open the reel</small></div>
+  </a>
+  <a class="card" id="lnk-ig-reel2" href="#">
+    <div class="num">3</div>
+    <div class="t">Save the reel 🔖<small>Tap the bookmark icon under the video</small></div>
+  </a>
+  <a class="card" id="lnk-ig-reel3" href="#">
+    <div class="num">4</div>
+    <div class="t">Share the reel to your Story<small>Tap the paper-plane icon → Add to Story</small></div>
+  </a>
+
+  <div class="divider">Bonus Quest</div>
+
+  <div class="spin-label">🎲 Quest 2 — Second Spin</div>
+  <p class="sub">Follow &amp; like the trailer on all three:</p>
+
+  <a class="card" id="lnk-tt" href="#">
+    <div class="num v">TT</div>
+    <div class="t">TikTok — <b>@mythlayer</b><small>Follow + like the trailer</small></div>
+  </a>
+  <a class="card" id="lnk-yt" href="#">
+    <div class="num v">YT</div>
+    <div class="t">YouTube — <b>@MythLayerStudios</b><small>Subscribe + like the trailer</small></div>
+  </a>
+  <a class="card" id="lnk-x" href="#">
+    <div class="num v">X</div>
+    <div class="t">X — <b>@mythlayer</b><small>Follow + like the trailer</small></div>
+  </a>
+
+  <div class="divider">The Goods</div>
+
+  <a class="cta" id="lnk-buy" href="https://mythlayer.itch.io/mythlayer">Get MythLayer</a>
+  <a class="cta ghost" id="lnk-home" href="/">Explore MythLayer.com</a>
+
+  <p class="fine">
+    One spin per quest per person. Show your completed steps at Booth #1033 —
+    a quick screen-glance is all we need. Prizes while supplies last, all weekend
+    (Fri–Sun). No purchase necessary.
+  </p>
+
+  <footer>MYTHLAYER · <a href="https://mythlayer.com">mythlayer.com</a> · Physical minis. Digital power.<p class="fine"><a href="/privacy.html">Privacy</a> · <button type="button" class="analytics-settings" data-analytics-settings>Analytics choice</button></p></footer>
+</div>
+
+<script>
+  // ============ LINKS — single source of truth ============
+  const LINKS = {
+    igProfile : "https://www.instagram.com/mythlayer/",
+    igReel    : "https://www.instagram.com/reel/DamQvguud_c/",
+    tiktok    : "https://www.tiktok.com/@mythlayer",
+    youtube   : "https://www.youtube.com/shorts/u7PX02baS2w",
+    x         : "https://x.com/mythlayer"
+  };
+  document.getElementById('lnk-ig-follow').href = LINKS.igProfile;
+  document.getElementById('lnk-ig-reel').href  = LINKS.igReel;
+  document.getElementById('lnk-ig-reel2').href = LINKS.igReel;
+  document.getElementById('lnk-ig-reel3').href = LINKS.igReel;
+  document.getElementById('lnk-tt').href = LINKS.tiktok;
+  document.getElementById('lnk-yt').href = LINKS.youtube;
+  document.getElementById('lnk-x').href  = LINKS.x;
+  // Preserve incoming campaign/linker parameters only on same-origin navigation.
+  for(const selector of ['#lnk-home','footer a']){
+    const link=document.querySelector(selector);
+    const destination=new URL(link.href,location.href);destination.search=location.search;link.href=destination.href;
+  }
+</script>
+<script src="/campaign-tags-r8.js?v=8.0"></script><script src="/analytics-r8.js?v=8.0"></script></body>
+</html>
