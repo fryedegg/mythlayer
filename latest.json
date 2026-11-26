@@ -1,16 +1,14 @@
 {
   "schema": "mythlayer-web-health/v2",
-  "checkedAt": "2026-11-25T12:55:32.135Z",
-  "runId": "45618284679",
-  "runUrl": "https://github.com/fryedegg/mythlayer/actions/runs/45618284679",
+  "checkedAt": "2026-11-26T12:34:27.512Z",
+  "runId": "45820679835",
+  "runUrl": "https://github.com/fryedegg/mythlayer/actions/runs/45820679835",
   "commit": "634d8ddd842dcb470ae1046504a9cc242a824b7a",
   "status": "passed",
-  "verified": 65,
+  "verified": 66,
   "failed": 0,
-  "unverified": 1,
-  "externalUnverified": 1,
+  "unverified": 0,
+  "externalUnverified": 0,
   "recovered": 0,
-  "names": [
-    "public itch page available"
-  ]
+  "names": []
 }
