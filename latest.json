@@ -1,8 +1,8 @@
 {
   "schema": "mythlayer-web-health/v2",
-  "checkedAt": "2026-11-26T12:34:27.512Z",
-  "runId": "45820679835",
-  "runUrl": "https://github.com/fryedegg/mythlayer/actions/runs/45820679835",
+  "checkedAt": "2026-11-27T12:19:58.680Z",
+  "runId": "45997552790",
+  "runUrl": "https://github.com/fryedegg/mythlayer/actions/runs/45997552790",
   "commit": "634d8ddd842dcb470ae1046504a9cc242a824b7a",
   "status": "passed",
   "verified": 66,
